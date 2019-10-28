@@ -17,15 +17,15 @@ class DQN:
     def __init__(self, input_shape, num_outputs, learning_rate=1e-4):
         self.model = models.Sequential(
             layers=[
-                layers.Conv2D(32, (8,8), activation='relu', strides=(4,4), input_shape=(input_shape[0], input_shape[1], input_shape[2]), use_bias=True),
+                layers.Conv2D(32, (8,8), activation='relu', strides=(4,4), input_shape=(input_shape[0], input_shape[1], input_shape[2]), data_format="channels_first", use_bias=True),
                 layers.Conv2D(64, (4,4), activation='relu', strides=(2,2), use_bias=True),
                 layers.Conv2D(64, (3,3), activation='relu', strides=(1,1), use_bias=True),
                 layers.Flatten(),
-                layers.Dense(512, activation='relu'),
-                layers.Dense(num_outputs, activation='linear')
+                layers.Dense(512, activation='relu', use_bias=True),
+                layers.Dense(num_outputs, use_bias=True)
             ]        
         )
-        self.optimizer = optimizers.Adam(learning_rate=learning_rate)
+        self.optimizer = optimizers.Adam(learning_rate=learning_rate, epsilon=1e-8)
         #self.model.compile(self.optimizer)
         #print(self.model.summary())
 

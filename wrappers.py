@@ -113,12 +113,6 @@ class BufferWrapper(gym.ObservationWrapper):
         self.buffer[-1] = observation
         return self.buffer
 
-def rolled_state(original_state):
-    if len(original_state.shape) is 3:
-        return np.rollaxis(np.rollaxis(original_state, 2, 0), 2, 0)
-    else:
-        return np.rollaxis(np.rollaxis(original_state,3,1),3,1)
-
 def make_env(env_name):
     env = gym.make(env_name)
     env = MaxAndSkipEnv(env)
